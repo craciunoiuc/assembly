@@ -1,0 +1,63 @@
+================================== Tema 2 ====================================
+                              - Decodificari -
+Nume: Craciunoiu Cezar
+Grupa: 324CA
+
+In tema s-a utilizat scheletul oferit pentru a construi cele 6 functii care
+decodifica siruri de caractere. Au fost modificate doar zonele marcate cu
+"TODO", mai adaugandu-se si cateva functii auxiliare. Tema a fost abordata pe
+bucati, fiecare functie fiind independenta de celelalte.
+
+Task 1 - Xor_Strings
+La primul task s-a cerut decodificarea unui sir ce a fost criptat caracter cu
+caracter print xor.  Metoda aplicata a fost realizarea din nou a xor-ului
+caracter cu caracter precum a fost precizat si in hint-ul din enunt. Pentru
+a se obtine cheia s-a parcurs, la inceput, caracter cu caracter pana s-a 
+gasit null, acolo urmand sa fie cheia.
+
+Task 2 - Rolling_Xor
+Pentru a decodifica sirul de la task-ul 2 mai intai este parcurs sirul pentru
+a se incepe de la final. Se parcurge sirul invers caracter cu caracter si se
+face xor cu byte-ul precedent.
+
+Task 3 - Xor_Hex_Strings
+La acest subpunct se adauga parse-area fata de task-ul 1. Pe langa xor-ul
+dintre cheie si string se mai adauga si transformarea cheii si sirului din
+caractere ASCII ce reprezinta numere hexazecimale in echivalentul lor valoric.
+Se parcurg cate 2 caractere o data si se reconstruieste fiecare byte din cheie
+si string (fiecare caracter ASCII reprezentand un nibble). La acest task s-a
+utilizat si o functie auxiliara care trece un caracter din ASCII in valoarea
+sa corespunzatoare hexazecimala (0-15).
+
+Task 4 - Base32Decode
+Deoarece codificarea de tip Base32 lucreaza cu 5 bytes (40 biti) s-a ales ca
+decodificarea sa se faca 8-32, adica mai intai sa se construiasca primul byte
+si apoi restul 4. Deoarece fiecare 40 biti sunt reprezentati prin 8 caractere
+pentru construirea primului byte se foloseste un caracter si 3 biti din al
+doilea, ceilalti 2 urmand sa fie pusi in alt registru. Celelalte 6 caractere
+sunt puse pe rand in acel registru urmand sa fie scris cu totul in sirul
+initial. Deoarece sirul codificat este mai lung , la final se pune null unde
+se termina sirul. La fiecare parcurgere se citesc 8 caractere si se scriu 5.
+Se utilizeaza o functie ajutatoare care trece fiecare caracter din ASCII in
+echivalentul ca valoare Base32.
+
+Task 5 - Bruteforce_Singlebyte_Xor
+Pentru decodificarea de la acest task s-a utilizat hint-ul oferit. Se incepe
+de la cheia 0 (cazul in care sirul nu este codificat) si se face xor pe
+fiecare caracter. Apoi se verifica daca sirul obtinut contine caracterele
+"force" consecutiv. Daca da, se iese din bucla, daca nu, se restaureaza sirul
+facand xor din nou pe tot sirul. Se incrementeaza cheia si se reia bucla pana
+cand se gaseste cea corecta.
+
+Task 6 - Decode_Vigenere
+Pentru aceasta decriptare s-a procedat asemanator cu Rot13. Se trece prin
+sirul ce urmeaza sa fie decriptat si se verifica daca este litera mica, daca
+nu, se sare peste incrementandu-se pointerul sirului. Daca este, se scade din
+caracterul curent diferenta de la caracterul cheii si 'a'. Daca rezulatul este
+peste 'a' rotirea s-a realizat cu succes. Daca nu este, se calculeaza cu cate
+pozitii este sub 'a' si se scade din 'z' acea valoare. Se incrementeaza atat
+cheia cat si sirul ce se doreste decriptat.
+
+Toate aceste task-uri reprezinta niste "subrutine" ale programului. Citirea si
+afisarea informatiilor a fost facuta de persoana ce a oferit scheletul temei.
+

@@ -1,0 +1,211 @@
+=====================================Tema 3====================================
+                                   -Code Golf-
+Nume: Craciunoiu Cezar
+Grupa: 324CA
+
+Programul realizeaza mai multe functii, atat cu ajutorul functiilor mystery cat
+si cu celelalte functii implementate deja in binar. Mai intai, functiile
+mystery realizeaza majoritatea "calculelor" din program si au fost
+reimplementate pentru a le optimiza. Ele sunt explicate mai jos (in explicatie
+s-a urmarit codul implementat la varianta eficienta in viteza):
+
+mystery1() - calculeaza lungimea unui string
+@<param1>: un string de caractere pentru care se calculeaza lungimea
+
+Functia mystery1 reprezinta o reimplementare a functiei strlen din C. Aceasta
+numara toate caracterele intalnite de la inceputul functiei pana intalneste
+caracterul null '\0'. In implementare s-a folosit o bucla hardware, la final
+facandu-se o diferenta de pointeri pentru a afla rezultatul. Functia foloseste
+doar 3 registrii: eax, ecx si edi, care sunt folositi de bucla "repne scasb".  
+
+Return: un intreg, lungimea stringului
+
+prototip: int strlen(char* string);
+
+
+mystery2() - Verifica daca un caracter apare intr-un string dat
+@<param1>: un string de caractere
+@<param2>: un caracter
+
+Functia are un comportament asemanator cu strchr din C, cu cateva mici
+diferente. In implementare functia se foloseste de mystery1 implementata
+anterior. Cu rezultatul de la mystery1 se porneste o bucla "repne scasb" care
+parcurge stringul dat ca parametru si compara elementele cu celalalt parametru.
+Daca toate caracterele au fost parcurse, dar nu s-a gasit nici un caracter
+egal, se intoarce un cod de eroare. Daca s-a gasit, atunci se calculeaza
+pozitia in string unde s-a gasit caracterul si se intoarce aceasta. Pentru
+optimizarea de spatiu cat si de viteza s-a utilizat bucla hardware in loc de
+codul oferit initial.
+
+Return: daca s-a ajuns la finalul sirului, intoarce o eroare, daca nu intoarce
+        lungimea sirului.
+
+prototip: int strchr(char* string, char caracter);
+
+
+mystery3() - verifica daca doua stringuri sunt egale
+@<param1>: primul string de comparat
+@<param2>: al doilea string de comparat
+@<param3>: lungimea primului string care se compara
+
+Functia reprezinta o varianta de strcmp din C mai simplificata. Aceasta compara
+doua stringuri cat timp nu paramentrul intreg nu a ajuns la 0. Daca comparatia
+s-a oprit inseamna ca, fie s-a ajuns la 0 si atunci se verifica daca ultimul
+caracter e egal, fie s-a oprit inainte si atunci este clar ca sirurile nu sunt
+egale. Functia este folosita in program atunci cand se compara argumentele de
+la intrare.
+
+Return: un intreg 0 sau 1, daca stringurile sunt egale sau nu
+
+prototip: int strequal(char* string1, char* string2,  int len);
+
+
+mystery4() - copiaza continutul dintr-un string in altul
+@<param1>: stringul in care se copiaza
+@<param2>: stringul din care se copiaza
+@<param3>: numarul de caractere copiate
+
+In varianta sa optimizata, functia este foarte simpla. Ea reprezinta executia
+unei bucle hardware de "rep movsb" folosindu-se registrii edi, esi si ecx.
+Aceasta este foarte asemanatoare cu functia memcpy din C.
+
+Return: nu returneaza nimic
+
+prototip: void memcpy(char* dest, char* source, int len);
+
+
+mystery5() - verifica daca un caracter dat este o cifra
+@<param1>: un caracter
+
+Functia verifica daca un caracter primit ca parametru este cifra, adica daca
+este cuprins intre 0-9. Pentru a realiza acest lucru, se scade '0' din
+caracterul dat. Daca valoarea lui este 0-9 se returneaza 1, altfel 0 (fals).
+
+Return: returneaza 1 daca este cifra si 0 altfel
+
+prototip: int isNumber(char character);
+
+mystery6() - functia inverseaza un string
+@<param1>: stringul ce se doreste inversat
+
+Functia inverseaza un string, mergand doar pana la jumatatea acestuia,
+interschimband element cu element cu ele din cealalta jumatate. In varianta
+optimizata nu se mai foloseste functia mystery4 pentru copiere si nici nu se
+foloseste alt string pentru buffer.
+
+Return: functia nu returneaza nimic
+
+prototip: void strReverse(char* string);
+
+
+mystery7() - transforma un string intr-un intreg
+@<param1>: stringul de cifre ce se doreste transformat
+
+Functia trece prin fiecare caracter din stringul de la intrare si verifica mai
+intai daca acesta este o cifra, folosind functia mystery5. Daca mystery5 a
+confirmat ca acel caracter este o cifra atunci se inmulteste numarul cu 10 si
+se aduna valoarea obtinuta prin scaderea lui '0'. La final se obtine numarul
+construit. Functia seamana foarte mult cu atoi din C, la care se mai adauga si
+verificarea ca acel caracter este o cifra.
+
+Return: intregul construit din string
+
+prototip: int strAtoi(char* string);
+
+
+mystery8() - cauta un substring intr-un string
+@<param1>: stringul in care se cauta substringul
+@<param2>: substringul care se cauta
+@<param3>: lungimea substringului
+
+Functia este foarte asemanatoare cu functia strstr din C. In cazul optimizat,
+aceasta parcurge sirul dat pana la cand da de caracterul null sau enter. Cand
+macar un caracter se potriveste, functia incepe sa compare caracter cu
+caracter fiecare element. Daca toate elementele au fost egale si cheia s-a
+terminat atunci se returneaza 1, altfel se continua executia. Daca in orice
+moment s-a dat de '\0' sau '\n' atunci executia se opreste returnandu-se 0.
+
+Return: un intreg, 1 daca s-a gasit substringul, 0 daca nu
+
+prototip: int strStr(char* string, char* substring, int subLen);
+
+
+mystery9() - afiseaza toate stringurile care contin un substring intre 2 valori
+@<param1>: stringul in care se cauta
+@<param2>: pozitie de la care se incepe cautarea
+@<param3>: pozitie pana la care se realizeaza cautarea
+@<param4>: substringul cautat
+
+Functia mystery9 este cea care realizeaza afisarea in program. Aceasta lucreaza
+impreuna cu mystery8 pentru a executa corect cerinta. Aceasta pleaca de la
+inceputul stringului la care se adauga offset-ul "start". Aceasta parcurge
+fiecare string despartit de '\n', aplicand functia mystery8 pe aceasta. Daca
+mystery8 returneaza 1, atunci se verifica daca se poate afisa stringul (daca
+dupa afisare se depaseste "stop"-ul). Daca se poate afisa stringul, se afiseaza
+si se trece mai departe. La fiecare incrementare se verifica daca s-a depasit
+"stop"-ul. Daca mystery8 a returnat 0, se parcurge restul sirului pana se
+intalneste '\n', apoi se continua executia normal. Pe scurt, mystery9 afiseaza 
+toate stringurile dintr-un interval care contin un substring anume.
+
+Return: nu returneaza nimic, doar afiseaza
+
+prototip: void strstr_bordered_print(char* string, int start, int stop,
+                                     char* substring);
+
+Functiile descrise mai sus asigura buna functionare a programului care este
+compus din mai multe functii si al carui comportament urmeaza sa fie descris
+mai jos.
+
+Programul incepe cu funtia _start  care verifica daca programul are argumente
+sau nu. Daca nu are argumente atunci se realizeaza un simplu echo al mesajului
+dat de la tastatura. Daca are argumente se incepe parse-area argumentelor.
+In functia parse_args se executa mai intai parse_opts care verifica daca
+primul argument dat este de forma "-x" si corespunde unuia dintre: -f -i -s -e.
+Daca nu corespunde niciunuia se opreste, altfel functia returneaza o valoare
+in functie de argument si se intoarce in parse_args. Apoi, in functie de 
+valoarea intoarsa de parse_opt se realizeaza diferite lucruri cu celelalte
+argumente, care "pregatesc" argumentele. Daca argumentul este -f se calculeaza
+lungimea celuilalt si se pregateste citirea de la tastatura. Daca este -i
+se calculeaza, de asemenea, lungimea si se pregateste citirea din fisier. Daca
+argumentul este -s sau -e se transforma argumentul din string in intreg, daca
+se poate.
+
+Urmeaza partea de do_run. In aceasta se verifica daca trebuie sa se citeasca
+de la tastatura sau din fisier (hotarat anterior) si se realizeaza acest lucru.
+Apoi, in functie de argumentul initial (cel cu "-x") se realizeaza mici
+modificari la variabilele globale (in cazul -s si -e, unde -s modifica pozitia 
+de start si -e pozitia de stop). Daca argumentul este -f se incepe executia
+functiei mystery9, descrisa anterior. Deci, se poate spune ca cel mai
+"important" argument al programului este -f.
+
+Programul are, explicit, urmatoarele argumente:
+
+    -f -> numit si "full", copiaza sirul primit la o adresa din program pentru
+          a incepe apelul functiei mystery9 (poate fi apelat impreuna cu -e
+          si/sau -s).
+
+    -s -> numit si "start", argumentul ii spune programului sa copieze de la
+          intrare valoarea de inceput in program, sa o transforme in intreg si
+          sa se foloseasca de ea.
+
+    -e -> numit si "end", argumentul, in mod similar cu -s, ii da programului o
+          valoare, doar ca de aceasta data, valoarea este de sfarsit.
+
+    -i -> numit si "input", argumentul ii zice programului sa citeasca din
+          fisierul al carui nume e primit ca argument.
+
+Toate argumentele de mai sus se pot folosi impreuna, dar, pentru a se afisa
+ceva trebuie sa fie inclus argumentul -f. Un prototip de apel ar putea fi:
+"./tema3 -s 2 -e 30 -f ceva -i fisierIn".
+
+In rest mai sunt cateva functii utilitare care "pregatesc" programul pentru a
+interactiona cu sistemul (prin intreruperi), cum ar fi do_exit, do_read,
+do_write, do_open, do_close, read_from_file. De asemenea in aceeasi categorie
+intra si print_string si print_line, acestea afisand lucruri. Toate aceste
+functii se folosesc de functia syscall_wrapper care contine intreruperea de
+sistem.
+
+Pe scurt, programul primeste argumente si in functie de acestea realizeaza
+diferite functii, cea mai importanta fiind cea de afisare a stringurilor
+despartite prin enter care au un substring egal cu cel dat la argument.
+

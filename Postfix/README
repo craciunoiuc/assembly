@@ -1,0 +1,44 @@
+======================== Tema 1 IOCLA ========================
+
+Nume: Craciunoiu Cezar
+Grupa: 324CA
+
+In fisierul tema1.asm a fost implementata cerinta temei, calculul expresiilor
+matematice in forma post fixata. S-a ales sa se foloseasca mai multe constante
+pentru a se face cat mai lizibil codul.
+Bucla principala NEXT_CHAR_L1 parcurge caracter cu caracter fiecare element din datele de intrare, oprindu-se doar cand s-a intalnit null. In tot
+programul se foloseste stiva pentru a se realiza operatiile in ordine corecta.
+Bucla NEXT_CHAR_L1 are mai multe sectiuni:
+--> READ_NUMBER_L1
+Este si prima bucla din program. Aceasta proceseaza numerele intalnite cu
+totul. Se aplica algoritmul ce consta in inmultirea cu 10 si adunarea cifrei
+intalnite, pana cand se da de caracterul spatiu. In cazul in care numarul este
+negativ, se marcheaza acest lucru si la final se pune minusul. Se precizeaza
+ca la prima citire registrul edi se afla deja la adresa unei cifre asa ca se
+sare peste incrementarea acestuia START_LOOP_L1.
+--> NOT_DIVISION_L1
+Daca nu este intalnita se verifica daca s-a intalnit caracterul '/'. Jumpurile
+puse la operatii functioneaza in sens invers, adica se activeaza daca nu se
+intalneste caracterul dorit. La fiecare operatie se scot ultimii doi termeni
+din stiva si se realizeaza operatia dorita. In cazul de fata, pentru
+siguranta se foloseste forma extinda de 64 de biti de tip edx:eax pentru
+impartire. Rezultatul obtinut se salveaza pe stiva.
+--> NOT_SUBSTRACTION_L1
+Aceasta zona serveste scop dublu. Mai intai se verifica daca urmatorul
+caracter este o cifra. Daca da se sare inapoi la citirea numarul si se
+proceseaza acesta. Daca este o operatie de scadere, se scot ultimele elemente
+din stiva si se face diferenta dintre cele 2. La fel, rezultatul se salveaza
+pe stiva de executie.
+--> NOT_MULTIPLICATION_L1
+Aceasta zona, precum celelalte, scoate 2 registrii, si apoi face inmultirea
+cu semn dintre cei 2.
+--> NOT_ADDITION_L1
+Se realizeaza acelasi lucru, dar pentru adunare.
+In cazul in care nu s-a intrat pe niciuna din ramurile de mai sus inseamna
+ca a fost introdus un element neconform (nu este cazul in inputul de fata) si
+se returneaza un mesaj si un cod de eroare. S-a incercat sa se simuleze cazul
+default al unui switch.
+Toate buclele ce se executa sar apoi la finalul buclei mari NEXT_CHAR_L1
+pentru a nu mai verifica si restul cazurilor. La final ar trebui sa se mai
+afle un singur element pe stiva, rezultatul ce urmeaza sa fie afisat.
+
